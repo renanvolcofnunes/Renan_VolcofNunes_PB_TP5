@@ -122,3 +122,11 @@ python -m src.baixar_modelo
 ## Autor
 
 Renan Volcof Nunes
+
+## Alinhamento com ESG e ODS
+
+A solução contribui para a dimensão social de ESG ao organizar e facilitar a análise de dados relacionados à empregabilidade jovem e às diferenças observadas entre estados e regiões.
+
+O projeto também se relaciona aos ODS ao utilizar dados sobre trabalho e juventude para apoiar a interpretação da inserção dos jovens no mercado de trabalho.
+
+Os indicadores estruturados fornecem a base quantitativa, as notícias coletadas complementam o contexto e a memória conversacional permite explorar essas informações em perguntas sucessivas.

@@ -117,3 +117,15 @@ O modelo pode apresentar limitações próprias de modelos generativos. Por isso
 O tempo de resposta depende do hardware, pois o modelo é executado localmente em CPU.
 
 O histórico utilizado pelo modelo é limitado às últimas 20 mensagens.
+
+## Insights no Contexto de ESG e ODS
+
+Os dados estruturados permitem comparar a taxa de desocupação entre estados e regiões e identificar diferenças existentes no conjunto de dados.
+
+No contexto de ESG, essas informações contribuem para a análise da dimensão social do projeto, relacionada à situação dos jovens no mercado de trabalho.
+
+As notícias coletadas por Web Scraping complementam os indicadores com conteúdos relacionados à empregabilidade, enquanto o modelo local permite consultar essas informações de maneira conversacional.
+
+No contexto dos ODS, a aplicação utiliza dados sobre emprego e juventude para tornar as informações mais acessíveis e apoiar a interpretação das diferenças observadas.
+
+Os insights produzidos permanecem limitados aos dados disponíveis no projeto. O modelo é orientado a não criar indicadores, valores, eventos ou conclusões que não estejam presentes no contexto fornecido.

@@ -86,3 +86,13 @@ A solução contribui para transformar dados coletados em informações mais ace
 - Utilização dos dados do projeto no contexto das respostas.
 - Respostas em português e sem criação de valores não disponíveis.
 - Visualizações e informações organizadas de forma clara.
+
+## Alinhamento com ESG e ODS
+
+No contexto do projeto, a relação com ESG está principalmente na dimensão social, pois a aplicação organiza e apresenta informações relacionadas à empregabilidade jovem, permitindo observar diferenças entre estados e regiões e facilitando a interpretação desses dados.
+
+O alinhamento com os ODS ocorre pela utilização de dados sobre trabalho e juventude para apoiar análises relacionadas à inserção de jovens no mercado de trabalho e às diferenças regionais observadas nos indicadores.
+
+A solução não atribui causas aos resultados nem cria metas que não estejam presentes nos dados. Seu papel é transformar os dados coletados em informações acessíveis, comparações e respostas contextualizadas que possam apoiar a compreensão do problema.
+
+A memória conversacional reforça esse objetivo ao permitir que o usuário explore os indicadores em várias interações, mantendo o contexto das perguntas anteriores.
