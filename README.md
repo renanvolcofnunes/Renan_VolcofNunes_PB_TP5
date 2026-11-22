@@ -1,26 +1,63 @@
-﻿# Empregabilidade Jovem no Brasil - TP4
+﻿# Empregabilidade Jovem no Brasil - TP5
 
 Projeto desenvolvido para a disciplina Projeto de Bloco: Inteligência Artificial Aplicada.
 
-O TP4 integra um modelo LLM local ao FastAPI para processamento de textos sobre empregabilidade jovem.
+O TP5 amplia o projeto com memória conversacional utilizando um modelo LLM local e os dados coletados ao longo das etapas anteriores.
+
+## Funcionalidade escolhida
+
+Opção 1: Implementação de Memória Conversacional com LLMs.
+
+A aplicação possui uma página de conversa em Streamlit e uma rota POST /conversa no FastAPI.
+
+O histórico das mensagens é armazenado no session_state do Streamlit e reenviado à API em cada nova interação.
+
+O modelo utiliza uma janela de até 20 mensagens anteriores para manter o contexto da conversa.
 
 ## Modelo LLM
 
-Modelo: `Qwen/Qwen2.5-1.5B-Instruct`
+Modelo: Qwen/Qwen2.5-1.5B-Instruct
 
 - PyTorch 2.15.0+cpu
-- Transformers 5.23.0
-- HuggingFace Hub 2.4.0
+- Transformers 5.24.0
+- FastAPI 0.165.0
+- Streamlit 1.62.0
 - Execução em CPU
-- RAM: 15,91 GB
-- Download do modelo: aproximadamente 3,10 GB
-- Inferência medida: aproximadamente 19,19 segundos
+- RAM do ambiente: aproximadamente 15,91 GB
+- Modelo local: aproximadamente 3,10 GB
 
-Baixar o modelo:
+O modelo é executado localmente e carregado uma única vez durante a inicialização da API.
 
-```powershell
-python -m src.baixar_modelo
-```
+## Dados utilizados no contexto
+
+A conversa utiliza dados já coletados e processados pelo projeto:
+
+- indicadores de empregabilidade armazenados em data/sample/empregabilidade_jovem.csv;
+- notícias coletadas por Web Scraping em data/processed/noticias_empregabilidade.csv;
+- demais dados processados e visualizados no dashboard.
+
+A função montar_contexto da API reúne essas informações antes de enviar a pergunta ao modelo.
+
+## Controle das respostas
+
+O prompt orienta o modelo a:
+
+- utilizar somente o contexto fornecido;
+- não inventar indicadores ou valores;
+- diferenciar dados estruturados de notícias coletadas;
+- informar quando uma resposta não estiver disponível nos dados.
+
+Também foi adicionada uma limpeza de caracteres estrangeiros inesperados na resposta.
+
+## Teste de memória
+
+Foi realizado um teste com 10 interações consecutivas.
+
+Na primeira interação foi informado que o estado de interesse principal era Bahia.
+
+Na décima interação o modelo foi questionado sobre o estado mencionado no início e respondeu corretamente Bahia.
+
+Esse teste demonstrou que a memória conversacional permaneceu disponível ao longo das interações.
 
 ## FastAPI
 
@@ -32,21 +69,14 @@ python -m uvicorn api.main:app
 
 Rotas principais:
 
-- `GET /saude`
-- `GET /indicadores`
-- `GET /indicadores/{uf}`
-- `GET /noticias`
-- `POST /noticias`
-- `POST /processar_texto`
-
-A rota `POST /processar_texto` utiliza o LLM local e retorna uma resposta estruturada com Pydantic.
-
-Erros tratados:
-
-- HTTP 422 para entrada inválida.
-- HTTP 503 quando o modelo está indisponível.
-- HTTP 500 para falha no processamento.
-- HTTP 404 para UF inexistente.
+- GET /
+- GET /saude
+- GET /indicadores
+- GET /indicadores/{uf}
+- GET /noticias
+- POST /noticias
+- POST /processar_texto
+- POST /conversa
 
 ## Streamlit
 
@@ -56,42 +86,39 @@ Executar em outro terminal:
 python -m streamlit run app.py
 ```
 
-A página **Analisador LLM** envia o texto ao FastAPI por HTTP e apresenta o resultado do modelo local.
+A página Conversa permite interagir com o modelo local mantendo o contexto entre perguntas sucessivas.
 
-## Documentação
+## Estrutura principal
 
-A justificativa da escolha do modelo está em:
+- api/main.py - API FastAPI
+- paginas/conversa.py - interface de conversa
+- src/analisador_llm.py - carregamento e uso do modelo
+- docs/project_charter.md - Project Charter atualizado
+- docs/data_summary_report.md - Data Summary Report atualizado
+- docs/escolha_do_modelo.md - justificativa do modelo local
 
-`docs/escolha_do_modelo.md`
+## Ambiente Local
 
-## GitHub
+Criar e ativar o ambiente virtual:
 
-https://github.com/renanvolcofnunes/Renan_VolcofNunes_PB_TP4
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
+
+Instalar as dependências:
+
+```powershell
+python -m pip install -r requirements-api.txt
+python -m pip install -r requirements-coleta.txt
+```
+
+Caso o modelo ainda não esteja disponível localmente:
+
+```powershell
+python -m src.baixar_modelo
+```
 
 ## Autor
 
 Renan Volcof Nunes
-
-## Ambiente Local
-
-Ambiente utilizado:
-
-- Python 3.14
-- PyTorch 2.15.0+cpu
-- Transformers 5.23.0
-- HuggingFace Hub 2.4.0
-- Execucao em CPU
-- RAM: 15,91 GB
-
-Criar e ativar o ambiente virtual:
-
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-
-Instalar as dependencias:
-
-python -m pip install -r requirements-api.txt
-
-Baixar o modelo local:
-
-python -m src.baixar_modelo
