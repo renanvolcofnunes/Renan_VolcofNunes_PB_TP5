@@ -1,69 +1,79 @@
-# Organização do Projeto — CRISP-DM e TDSP
+﻿# Organização do Projeto — CRISP-DM e TDSP
 
-## 2. Método CRISP-DM 
+## 1. Método CRISP-DM
 
-### 2.1 Entendimento do Negócio
+### 1.1 Entendimento do Negócio
 
-O projeto busca analisar os desafios relacionados à empregabilidade de jovens no Brasil, identificando diferenças entre regiões e compreendendo quais competências profissionais aparecem com maior frequência nas oportunidades de trabalho, são definidos nesta fase também as metas, os indicadores de sucesso, o ODS atendido e o público-alvo da aplicação.
+O projeto busca analisar informações relacionadas à empregabilidade jovem no Brasil, destacando diferenças entre estados e regiões e facilitando a interpretação dos indicadores disponíveis.
 
-### 2.2 Entendimento dos Dados
+### 1.2 Entendimento dos Dados
 
-Buscaremos dados relacionados à empregabilidade jovem, características socioeconômicas e oportunidades de trabalho. As fontes serão avaliadas considerando sua disponibilidade, formato, cobertura geográfica, qualidade.
+Foram utilizados dados estruturados de empregabilidade e conteúdos textuais coletados em fontes públicas.
 
-### 2.3 Preparação dos Dados
+As informações foram avaliadas considerando estrutura, disponibilidade, cobertura e utilidade para o objetivo do projeto.
 
-Será feita uma preparação como seleção das informações necessárias, conversão de tipos, tratamento de valores ausentes, padronização e entre outras preparações.
+### 1.3 Preparação dos Dados
 
-### 2.4 Modelagem
+Os dados foram organizados, padronizados e preparados para uso no dashboard, nas consultas da API e no contexto fornecido ao modelo local.
 
-Os indicadores vão ser organizados e comparados entre estados e regiões, identificando localidades que apresentam maiores desafios relacionados à empregos.
+### 1.4 Modelagem e Análise
 
-### 2.5 Avaliação
+Os indicadores foram organizados e comparados entre estados e regiões.
 
-Será verificado se o dashboard permite comparar as regiões brasileiras, identificar diferenças nos indicadores de empregabilidade e consultar as competências profissionais identificadas.
+Também foram utilizados conteúdos coletados por Web Scraping como informação complementar.
 
-Caso os resultados não sejam suficientes  o projeto poderá retornar às etapas anteriores para ajustar os dados e etapas.
+O modelo local Qwen/Qwen2.5-1.5B-Instruct foi integrado ao projeto para processamento de textos e memória conversacional.
 
-### 2.6 Implantação
+### 1.5 Avaliação
 
-O dashboard desenvolvido em Streamlit será executado e testado , nas etapas posteriores, poderá ser publicado.
+A solução foi testada por meio da navegação no dashboard, consultas à API, processamento de textos e interações conversacionais.
 
+Foi realizado um teste com 10 interações consecutivas, no qual o modelo conseguiu recuperar ao final uma informação fornecida no início da conversa.
 
-## 3. Aplicação do TDSP ao projeto
+### 1.6 Implantação
 
-### 3.1 Business Understanding
+O dashboard é executado com Streamlit e a API com FastAPI.
 
-Nesta etapa são definidos o problema, os objetivos, as metas, os indicadores de sucesso, o ODS atendido e o público-alvo.
+O modelo é executado localmente e carregado durante a inicialização da API.
 
-Para este projeto, o objetivo é compreender as diferenças regionais relacionadas à empregabilidade jovem e identificar as competências profissionais demandadas nas oportunidades analisadas.
+## 2. Aplicação do TDSP
 
-### 3.2 Data Acquisition and Understanding
+### 2.1 Business Understanding
 
-Serão coletada informações em fontes de dados onde poderão ser obtidos por arquivos, APIs e, nas etapas futuras do projeto, por Web Scraping. Após a coleta, será verificada a estrutura dos dados, os tipos das informações disponíveis.
+O problema de negócio está relacionado à compreensão da empregabilidade jovem e das diferenças observadas entre estados e regiões.
 
-### 3.3 Modeling
+### 2.2 Data Acquisition and Understanding
 
-Inicialmente usaremos comparações entre indicadores de diferentes estados e regiões e a organização das competências identificadas nas oportunidades de trabalho.
+Os dados do projeto foram obtidos por arquivos estruturados, coleta Web e integração com API.
 
-### 3.4 Deployment
+### 2.3 Modeling
 
-Python e Streamlit.
+Os dados são utilizados em comparações, visualizações e no contexto enviado ao modelo local.
 
-### 3.5 Customer Acceptance
+A memória conversacional permite que o usuário faça perguntas sucessivas mantendo informações mencionadas anteriormente.
 
-A aplicação deverá ser avaliada considerando se as informações apresentadas atendem às necessidades definidas no início do projeto, será verificado se os usuários conseguem identificar regiões com maiores desafios relacionados à empregabilidade jovem e consultar as competências profissionais encontradas nas oportunidades analisadas.
+### 2.4 Deployment
 
+A solução utiliza Python, Streamlit e FastAPI, com modelo LLM executado localmente.
+
+### 2.5 Customer Acceptance
+
+A aplicação deve permitir navegação simples, consulta dos indicadores, comparação entre estados, visualização das notícias e interação conversacional com contexto.
+
+## 3. Relação com ESG e ODS
+
+O projeto se relaciona principalmente à dimensão social de ESG ao organizar informações relacionadas à empregabilidade jovem.
+
+O alinhamento com os ODS ocorre pelo uso de dados sobre trabalho e juventude para apoiar a interpretação da inserção dos jovens no mercado de trabalho e das diferenças regionais observadas.
 
 ## 4. Relação entre CRISP-DM e TDSP
 
-As duas metodologias possuem objetivos semelhantes.
+O Entendimento do Negócio do CRISP-DM corresponde ao Business Understanding do TDSP.
 
-O **Entendimento do Negócio** do CRISP-DM corresponde ao **Business Understanding** do TDSP.
+As etapas de Entendimento e Preparação dos Dados se relacionam ao Data Acquisition and Understanding.
 
-As fases de **Entendimento dos Dados e Preparação dos Dados** do CRISP-DM são reunidas no estágio de **Data Acquisition and Understanding** do TDSP.
+A etapa de Modelagem corresponde ao Modeling.
 
-A fase de **Modelagem* liga  correspondência direta com o estágio de **Modeling**.
+As etapas de Avaliação e Implantação se relacionam a Deployment e Customer Acceptance.
 
-Por fim, as fases de **Avaliação e Implantação** do CRISP-DM estão relacionadas aos estágios de **Deployment e Customer Acceptance** do TDSP.
-
-Dessa forma, o CRISP-DM será utilizado como referência para compreender as etapas de um projeto de dados, enquanto o TDSP auxiliará na organização.
+Dessa forma, as duas metodologias ajudam a organizar o ciclo completo do projeto, desde a definição do problema até a apresentação e utilização da solução.

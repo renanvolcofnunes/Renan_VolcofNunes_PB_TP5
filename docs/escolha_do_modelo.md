@@ -2,7 +2,7 @@
 
 ## Modelo escolhido
 
-O modelo utilizado no TP4 foi o `Qwen/Qwen2.5-1.5B-Instruct`, executado localmente com PyTorch e Transformers.
+O modelo utilizado no projeto foi o `Qwen/Qwen2.5-1.5B-Instruct`, executado localmente com PyTorch e Transformers.
 
 ## Critérios utilizados
 
@@ -60,7 +60,7 @@ A pasta `modelos/` está incluída no `.gitignore` e não é enviada ao GitHub d
 
 O modelo escolhido utiliza licença Apache 2.0 e pode ser obtido pelo Hugging Face para execução local.
 
-Essa disponibilidade foi importante porque o TP4 exige que o modelo seja executado no próprio ambiente de desenvolvimento.
+Essa disponibilidade foi importante porque o projeto utiliza execução local do modelo no próprio ambiente de desenvolvimento.
 
 ## Integração com FastAPI
 
@@ -77,4 +77,5 @@ O critério que mais pesou na escolha foi o equilíbrio entre capacidade de gera
 O Qwen2.5-1.5B-Instruct apresentou resultado satisfatório na tarefa de resumo e conseguiu ser executado localmente com os 15,91 GB de RAM disponíveis.
 
 Embora um modelo menor pudesse reduzir o consumo de recursos, o computador suportou o modelo de 1.5B. Por isso, foi escolhida a opção com maior capacidade, mantendo a execução totalmente local.
+
 
