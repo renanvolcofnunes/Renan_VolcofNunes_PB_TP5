@@ -3,11 +3,12 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 from fastapi import FastAPI, Query, HTTPException
 from pydantic import BaseModel, Field, HttpUrl
-from src.analisador_llm import carregar_modelo, processar_texto
+from src.analisador_llm import carregar_modelo, processar_texto, conversar
 
 BASE = Path(__file__).resolve().parent.parent
 ARQUIVO = BASE / "data" / "sample" / "empregabilidade_jovem.csv"
 ARQUIVO_NOTICIAS_API = BASE / "data" / "processed" / "noticias_api.csv"
+ARQUIVO_NOTICIAS = BASE / "data" / "processed" / "noticias_empregabilidade.csv"
 
 modelo_disponivel = False
 erro_modelo = None
@@ -48,6 +49,18 @@ class ResultadoAnalise(BaseModel):
     tipo_analise: str
     texto_original: str
     resultado: str
+    modelo: str
+
+class MensagemConversa(BaseModel):
+    role: str
+    content: str
+
+class ConversaEntrada(BaseModel):
+    pergunta: str = Field(min_length=2)
+    historico: list[MensagemConversa] = Field(default_factory=list)
+
+class ResultadoConversa(BaseModel):
+    resposta: str
     modelo: str
 
 def carregar_dados():
@@ -149,3 +162,30 @@ def analisar_texto(entrada: TextoEntrada):
 
     except Exception as erro:
         raise HTTPException(status_code=500, detail=f"Erro ao processar texto: {erro}")
+
+@app.post("/conversa", response_model=ResultadoConversa, summary="Conversa com memória")
+def rota_conversa(entrada: ConversaEntrada):
+    if not modelo_disponivel: raise HTTPException(status_code=503, detail="Modelo LLM indisponível.")
+
+    try:
+        historico = [{"role": mensagem.role, "content": mensagem.content} for mensagem in entrada.historico]
+        resposta = conversar(entrada.pergunta, historico, montar_contexto())
+        return ResultadoConversa(resposta=resposta, modelo="Qwen/Qwen2.5-1.5B-Instruct")
+    except Exception as erro:
+        raise HTTPException(status_code=500, detail=f"Erro ao processar conversa: {erro}")
+
+
+
+def montar_contexto():
+    dados = carregar_dados()
+    arquivo_noticias = BASE / "data" / "processed" / "noticias_empregabilidade.csv"
+    noticias = []
+
+    if arquivo_noticias.exists():
+        with open(arquivo_noticias, "r", encoding="utf-8-sig") as arquivo:
+            noticias = list(csv.DictReader(arquivo))
+
+    indicadores = [f'{linha["uf"]} - {linha["estado"]} - {linha["regiao"]}: taxa de desocupação {linha["taxa_desocupacao"]}%' for linha in dados]
+    noticias_texto = [f'{linha["titulo"]} | {linha["data"]} | {linha["fonte"]}' for linha in noticias]
+
+    return "INDICADORES DO PROJETO:\n" + "\n".join(indicadores) + "\n\nNOTÍCIAS COLETADAS POR WEB SCRAPING:\n" + ("\n".join(noticias_texto) if noticias_texto else "Nenhuma notícia disponível.")
